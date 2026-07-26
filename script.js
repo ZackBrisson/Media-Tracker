@@ -9,15 +9,36 @@ const seriesInput = document.getElementById("series-input");
 const readingStatusInput = document.getElementById("reading-status-input");
 const bookList = document.getElementById("book-list");
 
-//array for storing books added
-const books = [];
+// array for storing books added
+let books = [];
 
+// This function displays all books on the page
+function renderBooks() {
+  bookList.innerHTML = "";
 
-// This code shows what happens when form is submitted
-  bookForm.addEventListener("submit", function(event) {
+  books.forEach(function(book) {
+    bookList.innerHTML +=
+      '<div class="book-card">' +
+      "<br>" +
+      "Title: " + book.title + "<br>" +
+      "Author: " + book.author + "<br>" +
+      "Pages: " + book.pages + "<br>" +
+      "Genre: " + book.genre + "<br>" +
+      "Sub Genre: " + book.subGenre + "<br>" +
+      "Book Cover: " + book.bookCover + "<br>" +
+      "Series: " + book.series + "<br>" +
+      "Reading Status: " + book.readingStatus + "<br>" +
+      '<button class="delete-button" data-id="' + book.id + '">Delete</button>' +
+      "</div>";
+  });
+}
+
+// This code runs when the form is submitted
+bookForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
-const newBook = {
+  const newBook = {
+    id: Date.now(),
     title: titleInput.value,
     author: authorInput.value,
     pages: pagesInput.value,
@@ -26,19 +47,24 @@ const newBook = {
     bookCover: bookCoverInput.value,
     series: seriesInput.value,
     readingStatus: readingStatusInput.value
-};
-  
-books.push(newBook);
-  bookList.innerHTML = "";
+  };
 
-  //Loop for adding book titles to page
-  books.forEach(function(book) {
-    bookList.innerHTML += '<div class="book-card">' + "<br>" + "Title: " + book.title + "<br>" + "Author: " + book.author + "<br>" + "Pages: " + book.pages + "<br>" + "Genre: " + book.genre + "<br>" + "Sub Genre: " + book.subGenre + "<br>" + "Book Cover: " + book.bookCover + "<br>" + "ReadingStatus: " + book.readingStatus + "<br>" +  "</div>";
+  books.push(newBook);
 
-    bookForm.reset();
+  renderBooks();
+
+  bookForm.reset();
 });
 
-  console.log(newBook);
-  console.log("Book submitted");
-  console.log(books);
+// This code runs when a Delete button is clicked
+bookList.addEventListener("click", function(event) {
+  if (event.target.classList.contains("delete-button")) {
+    const bookId = Number(event.target.dataset.id);
+
+    books = books.filter(function(book) {
+      return book.id !== bookId;
+    });
+
+    renderBooks();
+  }
 });
