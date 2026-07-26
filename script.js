@@ -8,15 +8,29 @@ const bookCoverInput = document.getElementById("book-cover-input");
 const seriesInput = document.getElementById("series-input");
 const readingStatusInput = document.getElementById("reading-status-input");
 const bookList = document.getElementById("book-list");
+const searchInput = document.getElementById("search-input");
 
 // array for storing books added
 let books = [];
 
+// function used to search books
+searchInput.addEventListener("input", function() {
+  const searchText = searchInput.value.toLowerCase();
+
+  const filteredBooks = books.filter(function(book) {
+    return book.title.toLowerCase().includes(searchText) ||
+           book.author.toLowerCase().includes(searchText);
+  });
+
+  renderBooks(filteredBooks);;
+});
+
+
 // This function displays all books on the page
-function renderBooks() {
+function renderBooks(booksArray) {
   bookList.innerHTML = "";
 
-  books.forEach(function(book) {
+  booksArray.forEach(function(book) {
     bookList.innerHTML +=
       '<div class="book-card">' +
       "<br>" +
@@ -58,7 +72,7 @@ bookForm.addEventListener("submit", function(event) {
 
   books.push(newBook);
 
-  renderBooks();
+  renderBooks(books);
 
   bookForm.reset();
 });
@@ -75,7 +89,7 @@ const bookToUpdate = books.find(function(book) {
 
 bookToUpdate.readingStatus = newStatus;
 
-renderBooks();
+renderBooks(books);
   }
 });
 
@@ -88,6 +102,6 @@ bookList.addEventListener("click", function(event) {
       return book.id !== bookId;
     });
 
-    renderBooks();
+    renderBooks(books);
   }
 });
