@@ -28,8 +28,15 @@ function renderBooks() {
       "Book Cover: " + book.bookCover + "<br>" +
       "Series: " + book.series + "<br>" +
       "Reading Status: " + book.readingStatus + "<br>" +
-      '<button class="delete-button" data-id="' + book.id + '">Delete</button>' +
-      "</div>";
+      '<label>Change Status: </label>' +
+      '<select class="status-select" data-id="' + book.id + '">' +
+      '<option value="" disabled selected>Change status</option>' +
+      '<option value="Not Read">Not Read</option>' +
+      '<option value="Reading">Reading</option>' +
+      '<option value="Read">Read</option>' +
+      '</select>' +
+      "<br>" +
+      '<button class="delete-button" data-id="' + book.id + '">Delete</button>' + "</div>";
   });
 }
 
@@ -54,6 +61,22 @@ bookForm.addEventListener("submit", function(event) {
   renderBooks();
 
   bookForm.reset();
+});
+
+// Event for dropdown menu for reading status changes in the Card
+bookList.addEventListener("change", function(event) {
+  if (event.target.classList.contains("status-select")) {
+   const bookId = Number(event.target.dataset.id);
+const newStatus = event.target.value;
+
+const bookToUpdate = books.find(function(book) {
+  return book.id === bookId;
+});
+
+bookToUpdate.readingStatus = newStatus;
+
+renderBooks();
+  }
 });
 
 // This code runs when a Delete button is clicked
