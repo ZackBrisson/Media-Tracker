@@ -35,6 +35,7 @@ books.push(newBook);
   books.forEach(function(book) {
     bookList.innerHTML += '<div class="book-card">' + "<br>" + "Title: " + book.title + "<br>" + "Author: " + book.author + "<br>" + "Pages: " + book.pages + "<br>" + "Genre: " + book.genre + "<br>" + "Sub Genre: " + book.subGenre + "<br>" + "Book Cover: " + book.bookCover + "<br>" + "ReadingStatus: " + book.readingStatus + "<br>" +  "</div>";
 
+    bookForm.reset();
 });
 
   console.log(newBook);
