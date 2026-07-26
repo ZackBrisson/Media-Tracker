@@ -33,10 +33,8 @@ books.push(newBook);
 
   //Loop for adding book titles to page
   books.forEach(function(book) {
-    bookList.innerHTML += book.title + "<br>";
-    bookList.innerHTML += book.author + "<br>";
-    bookList.innerHTML += book.pages + "<br>";
-    bookList.innerHTML += book.readingStatus + "<br>" + "<hr>";
+    bookList.innerHTML += '<div class="book-card">' + "<br>" + "Title: " + book.title + "<br>" + "Author: " + book.author + "<br>" + "Pages: " + book.pages + "<br>" + "Reading Status: " + book.readingStatus + "<br>" + "</div>";
+
 });
 
   console.log(newBook);
