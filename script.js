@@ -33,6 +33,20 @@ function applyFilters() {
   renderBooks(filteredBooks);
 }
 
+// function used to store books
+function saveBooks() {
+  localStorage.setItem("books", JSON.stringify(books));
+}
+
+// function used to load books
+function loadBooks() {
+  const savedBooks = localStorage.getItem("books");
+
+  if (savedBooks) {
+    books = JSON.parse(savedBooks);
+  }
+}
+
 searchInput.addEventListener("input", applyFilters);
 
 statusFilter.addEventListener("change", applyFilters);
@@ -82,9 +96,11 @@ bookForm.addEventListener("submit", function(event) {
   };
 
   books.push(newBook);
+ 
+  saveBooks();
 
-  applyFilters();;
-
+  applyFilters();
+  
   bookForm.reset();
 });
 
@@ -100,7 +116,10 @@ const bookToUpdate = books.find(function(book) {
 
 bookToUpdate.readingStatus = newStatus;
 
+saveBooks();
+
 applyFilters();
+
   }
 });
 
@@ -114,5 +133,10 @@ bookList.addEventListener("click", function(event) {
     });
 
     applyFilters();
+
+    saveBooks();
   }
 });
+
+loadBooks();
+applyFilters();
