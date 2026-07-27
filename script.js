@@ -83,7 +83,7 @@ bookForm.addEventListener("submit", function(event) {
 
   books.push(newBook);
 
-  renderBooks(books);
+  applyFilters();;
 
   bookForm.reset();
 });
@@ -100,7 +100,7 @@ const bookToUpdate = books.find(function(book) {
 
 bookToUpdate.readingStatus = newStatus;
 
-renderBooks(books);
+applyFilters();
   }
 });
 
@@ -113,6 +113,6 @@ bookList.addEventListener("click", function(event) {
       return book.id !== bookId;
     });
 
-    renderBooks(books);
+    applyFilters();
   }
 });
