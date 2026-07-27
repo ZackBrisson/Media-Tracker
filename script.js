@@ -9,22 +9,33 @@ const seriesInput = document.getElementById("series-input");
 const readingStatusInput = document.getElementById("reading-status-input");
 const bookList = document.getElementById("book-list");
 const searchInput = document.getElementById("search-input");
+const statusFilter = document.getElementById("status-filter");
 
 // array for storing books added
 let books = [];
 
 // function used to search books
-searchInput.addEventListener("input", function() {
+function applyFilters() {
   const searchText = searchInput.value.toLowerCase();
+  const selectedStatus = statusFilter.value;
 
   const filteredBooks = books.filter(function(book) {
-    return book.title.toLowerCase().includes(searchText) ||
-           book.author.toLowerCase().includes(searchText);
+    const matchesSearch =
+      book.title.toLowerCase().includes(searchText) ||
+      book.author.toLowerCase().includes(searchText);
+
+    const matchesStatus =
+      selectedStatus === "All" || book.readingStatus === selectedStatus;
+
+    return matchesSearch && matchesStatus;
   });
 
-  renderBooks(filteredBooks);;
-});
+  renderBooks(filteredBooks);
+}
 
+searchInput.addEventListener("input", applyFilters);
+
+statusFilter.addEventListener("change", applyFilters);
 
 // This function displays all books on the page
 function renderBooks(booksArray) {
