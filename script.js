@@ -55,6 +55,11 @@ statusFilter.addEventListener("change", applyFilters);
 function renderBooks(booksArray) {
   bookList.innerHTML = "";
 
+ if (booksArray.length === 0) {
+    bookList.innerHTML = "<p>No books found.</p>";
+    return;
+  }
+
   booksArray.forEach(function(book) {
     bookList.innerHTML +=
   '<div class="book-card">' +
