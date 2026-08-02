@@ -1,5 +1,89 @@
-.book-card {
-    margin: 10px;
-    padding: 5px;
-    border: 1px, solid, black;
+
+
+/* Page Layout */
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
 }
+
+h1,
+h2 {
+  text-align: center;
+}
+
+/* Search and Filter Section */
+#book-search-section {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding: 16px;
+}
+
+
+
+/* Main Book Page Layout */
+#book-main-section {
+  display: flex;
+  gap: 20px;
+}
+
+/* Add Book Section */
+#add-book-section {
+  flex: 1;
+  border: solid, black, 1px;
+  padding: 10px;
+}
+
+#add-book-section,
+#book-list-section {
+  border: 1px solid black;
+  padding: 16px;
+}
+
+#add-book-section h3 {
+  text-align: center;
+}
+
+/* Book Form */
+#book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Book List Section */
+#book-list-section {
+  flex: 1;
+}
+
+#book-list-section h3 {
+  text-align: center;
+}
+
+.status-select,
+.delete-button {
+  padding: 4px 8px;
+  margin-top: 8px;
+}
+
+/* Individual Book Cards */
+.book-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+/* Recommendation Section */
+#book-recommendation-section {
+  margin-top: 40px;
+  border: 1px solid black;
+  padding: 16px;
+}
+
+#book-recommendation-section h2 {
+  text-align: center;
+}
+
