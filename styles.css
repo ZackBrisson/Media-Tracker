@@ -53,6 +53,13 @@ h2 {
   gap: 8px;
 }
 
+#book-form button {
+  padding: 10px 14px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
 /* Book List Section */
 #book-list-section {
   flex: 1;
@@ -66,6 +73,17 @@ h2 {
 .delete-button {
   padding: 4px 8px;
   margin-top: 8px;
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
+.status-select,
+.delete-button {
+  padding: 6px 10px;
+  margin-top: 8px;
+  border-radius: 6px;
 }
 
 /* Individual Book Cards */
