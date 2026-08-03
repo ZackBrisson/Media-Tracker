@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Media Tracker</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Media Tracker</h1>
+    <h2>Book Tracker</h2>
+    
+    <section id ="book-search-section">
+  <input id="search-input" type="text" placeholder="Search by title or author">
+  
+<select id="status-filter">
+  <option value="All">All Statuses</option>
+  <option value="Not Read">Not Read</option>
+  <option value="Reading">Reading</option>
+  <option value="Read">Read</option>
+</select>
+  </section>
+
+  <section id="book-main-section">
+    <section id="add-book-section">
+        <h3>Add Book</h3>
+          <form id="book-form">
+          <label for="title-input">Title</label>
+          <input id="title-input" type="text" placeholder="Enter Book Title">
+
+          <label for="author-input">Author</label>
+          <input id="author-input" type="text" placeholder="Enter Author">
+          
+          <label for="pages-input">Pages</label>
+          <input id="pages-input" type="number" placeholder="Enter Total Pages">
+
+           <label for="genre-input">Genre</label>
+          <input id="genre-input" type="text" placeholder="Enter Genre">
+
+           <label for="sub-genre-input">Sub Genre</label>
+          <input id="sub-genre-input" type="text" placeholder="Enter Sub Genre">
+
+           <label for="book-cover-input">Book Cover</label>
+          <input id="book-cover-input" type="text" placeholder="Enter Book Cover">
+           
+          <label for="series-input">Series</label>
+          <input id="series-input" type="text" placeholder="Enter Series Name">
+
+          <label for="reading-status-input">Reading Status</label>
+          <select id="reading-status-input">
+            <option value="" disabled selected>Select Status</option>
+            <option value="Not Read">Not Read</option>
+            <option value="Reading">Reading</option>
+            <option value="Read">Read</option>
+          </select>
+
+      <button type="submit">Add Book</button>
+</form>
+    </section>
+
+    <section id="book-list-section">
+        <h3>Book List</h3>
+        <div id="book-list"></div>
+    </section>
+  </section>
+
+<section id="book-recommendation-section">
+    <h2>Book Recommendations</h2>
+      <p>Coming Soon</p>
+</section>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+  </body>
+</html>
