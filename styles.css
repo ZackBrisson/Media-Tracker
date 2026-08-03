@@ -10,6 +10,14 @@
   margin-bottom: 30px;
 }
 
+#current-focus {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
 #media-shelves {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -62,6 +70,25 @@
 #favorites-shelf h2 {
   text-align: center;
   margin-top: 0;
+}
+
+/* Links and Buttons */
+.media-shelf a,
+#current-focus a,
+nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 6px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.media-shelf a:hover,
+#current-focus a:hover,
+nav a:hover {
+  background-color: #eeeeee;
 }
 
 @media (max-width: 700px) {
