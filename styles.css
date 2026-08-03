@@ -17,22 +17,52 @@
 }
 
 .media-shelf {
-  border: 1px solid black;
-  padding: 16px;
-  border-radius: 8px;
+  border: 2px solid #8b5a2b;
+  border-bottom: 12px solid #8b5a2b;
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 140px;
+  background-color: #fff8ec;
+}
+
+.media-shelf h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.shelf-items {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.shelf-item {
+ border: 1px solid black;
+  padding: 20px 12px;
+  min-width: 70px;
+  text-align: center;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 .featured-shelf {
   grid-column: 1 / -1;
+  min-height: 180px;
 }
 
 #favorites-shelf {
   border: 1px solid black;
-  padding: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 20px;
   margin-top: 30px;
+  min-height: 140px;
 }
 
+#favorites-shelf h2 {
+  text-align: center;
+  margin-top: 0;
+}
 
 /* BEGINNING OF THE BOOK TRACKER SECTION */
 
@@ -46,6 +76,20 @@ body {
 h1,
 h2 {
   text-align: center;
+}
+
+/* Navigation */
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 6px;
+  text-decoration: none;
+  color: black;
 }
 
 /* Search and Filter Section */
