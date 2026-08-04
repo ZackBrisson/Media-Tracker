@@ -14,6 +14,8 @@ const statusFilter = document.getElementById("status-filter");
 // array for storing books added
 let books = [];
 
+let editingBookId = null;
+
 // function used to search books
 function applyFilters() {
   const searchText = searchInput.value.toLowerCase();
@@ -54,7 +56,7 @@ statusFilter.addEventListener("change", applyFilters);
 // This function displays all books on the page
 function renderBooks(booksArray) {
   bookList.innerHTML = "";
-
+  
  if (booksArray.length === 0) {
     bookList.innerHTML = "<p>No books found.</p>";
     return;
@@ -78,7 +80,7 @@ function renderBooks(booksArray) {
       '<option value="Read"' + (book.readingStatus === "Read" ? " selected" : "") + '>Read</option>' +
     '</select>' +
 
-    '<button class="delete-button" data-id="' + book.id + '">Delete</button>' +
+    '<button class="delete-button" data-id="' + book.id + '">Delete</button>' + '<button class="edit-button" data-id="' + book.id + '">Edit</button>' +
   '</div>';
   });
 }
@@ -87,6 +89,7 @@ function renderBooks(booksArray) {
 bookForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
+  if (editingBookId === null) {
   const newBook = {
     id: Date.now(),
     title: titleInput.value,
@@ -100,12 +103,26 @@ bookForm.addEventListener("submit", function(event) {
   };
 
   books.push(newBook);
- 
-  saveBooks();
+} else {
+  const bookToUpdate = books.find(function(book) {
+    return book.id === editingBookId;
+  });
 
-  applyFilters();
-  
-  bookForm.reset();
+  bookToUpdate.title = titleInput.value;
+  bookToUpdate.author = authorInput.value;
+  bookToUpdate.pages = pagesInput.value;
+  bookToUpdate.genre = genreInput.value;
+  bookToUpdate.subGenre = subGenreInput.value;
+  bookToUpdate.bookCover = bookCoverInput.value;
+  bookToUpdate.series = seriesInput.value;
+  bookToUpdate.readingStatus = readingStatusInput.value;
+
+  editingBookId = null;
+}
+
+saveBooks();
+applyFilters();
+bookForm.reset();
 });
 
 // Event for dropdown menu for reading status changes in the Card
@@ -127,19 +144,39 @@ applyFilters();
   }
 });
 
-// This code runs when a Delete button is clicked
+// This code runs when a Delete/Edit button is clicked
 bookList.addEventListener("click", function(event) {
   if (event.target.classList.contains("delete-button")) {
     const bookId = Number(event.target.dataset.id);
 
+  
     books = books.filter(function(book) {
       return book.id !== bookId;
     });
-
+    
     applyFilters();
 
     saveBooks();
   }
+
+  if (event.target.classList.contains("edit-button")) {
+  const bookId = Number(event.target.dataset.id);
+
+  const bookToEdit = books.find(function(book) {
+    return book.id === bookId;
+  });
+
+  titleInput.value = bookToEdit.title;
+  authorInput.value = bookToEdit.author;
+  pagesInput.value = bookToEdit.pages;
+  genreInput.value = bookToEdit.genre;
+  subGenreInput.value = bookToEdit.subGenre;
+  bookCoverInput.value = bookToEdit.bookCover;
+  seriesInput.value = bookToEdit.series;
+  readingStatusInput.value = bookToEdit.readingStatus;
+
+  editingBookId = bookId;
+}
 });
 
 loadBooks();
