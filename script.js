@@ -72,7 +72,10 @@ function renderBooks(booksArray) {
     '<p><strong>Pages:</strong> ' + book.pages + '</p>' +
     '<p><strong>Genre:</strong> ' + book.genre + '</p>' +
     '<p><strong>Sub Genre:</strong> ' + book.subGenre + '</p>' +
-    '<p><strong>Book Cover:</strong> ' + book.bookCover + '</p>' +
+    (book.bookCover
+  ? '<img class="book-cover" src="' + book.bookCover + '" alt="Cover for ' + book.title + '">'
+  : ''
+) +
     '<p><strong>Series:</strong> ' + book.series + '</p>' +
     '<p><strong>Reading Status:</strong> ' + book.readingStatus + '</p>' +
 

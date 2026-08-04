@@ -196,11 +196,30 @@ nav a {
   cursor: pointer;
 }
 
+.delete-button {
+  margin-right: 8px;
+}
+
+.status-select {
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 8px;
+  border-radius: 6px;
+}
+
 .status-select,
 .delete-button {
   padding: 6px 10px;
   margin-top: 8px;
   border-radius: 6px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 6px 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* Individual Book Cards */
@@ -235,6 +254,14 @@ nav a {
   #search-input {
     width: 100%;
   }
+}
+
+.book-cover {
+  display: block;
+  max-width: 120px;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 6px;
 }
 
 /* END OF BOOK TRACKER SECTION */
