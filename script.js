@@ -65,29 +65,37 @@ function renderBooks(booksArray) {
   }
 
   booksArray.forEach(function(book) {
-    bookList.innerHTML +=
-  '<div class="book-card">' +
-    '<h3>' + book.title + '</h3>' +
-    '<p><strong>Author:</strong> ' + book.author + '</p>' +
-    '<p><strong>Pages:</strong> ' + book.pages + '</p>' +
-    '<p><strong>Genre:</strong> ' + book.genre + '</p>' +
-    '<p><strong>Sub Genre:</strong> ' + book.subGenre + '</p>' +
-    (book.bookCover
-  ? '<img class="book-cover" src="' + book.bookCover + '" alt="Cover for ' + book.title + '">'
-  : ''
-) +
-    '<p><strong>Series:</strong> ' + book.series + '</p>' +
-    '<p><strong>Reading Status:</strong> ' + book.readingStatus + '</p>' +
+  bookList.innerHTML +=
+    '<div class="book-card">' +
+      '<div class="book-card-content">' +
 
-    '<select class="status-select" data-id="' + book.id + '">' +
-      '<option value="Not Read"' + (book.readingStatus === "Not Read" ? " selected" : "") + '>Not Read</option>' +
-      '<option value="Reading"' + (book.readingStatus === "Reading" ? " selected" : "") + '>Reading</option>' +
-      '<option value="Read"' + (book.readingStatus === "Read" ? " selected" : "") + '>Read</option>' +
-    '</select>' +
+        (book.bookCover
+          ? '<img class="book-cover" src="' + book.bookCover + '" alt="Cover for ' + book.title + '">'
+          : ''
+        ) +
 
-    '<button class="delete-button" data-id="' + book.id + '">Delete</button>' + '<button class="edit-button" data-id="' + book.id + '">Edit</button>' +
-  '</div>';
-  });
+        '<div class="book-details">' +
+          '<h3>' + book.title + '</h3>' +
+          '<p><strong>Author:</strong> ' + book.author + '</p>' +
+          '<p><strong>Pages:</strong> ' + book.pages + '</p>' +
+          '<p><strong>Genre:</strong> ' + book.genre + '</p>' +
+          '<p><strong>Sub Genre:</strong> ' + book.subGenre + '</p>' +
+          '<p><strong>Series:</strong> ' + book.series + '</p>' +
+          '<p><strong>Reading Status:</strong> ' + book.readingStatus + '</p>' +
+
+          '<select class="status-select" data-id="' + book.id + '">' +
+            '<option value="Not Read"' + (book.readingStatus === "Not Read" ? " selected" : "") + '>Not Read</option>' +
+            '<option value="Reading"' + (book.readingStatus === "Reading" ? " selected" : "") + '>Reading</option>' +
+            '<option value="Read"' + (book.readingStatus === "Read" ? " selected" : "") + '>Read</option>' +
+          '</select>' +
+
+          '<button class="delete-button" data-id="' + book.id + '">Delete</button>' +
+          '<button class="edit-button" data-id="' + book.id + '">Edit</button>' +
+        '</div>' +
+
+      '</div>' +
+    '</div>';
+});
 }
 
 // This code runs when the form is submitted
