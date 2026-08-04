@@ -1,4 +1,5 @@
 const bookForm = document.getElementById("book-form");
+const submitButton = bookForm.querySelector("button");
 const titleInput = document.getElementById("title-input");
 const authorInput = document.getElementById("author-input");
 const pagesInput = document.getElementById("pages-input");
@@ -10,6 +11,7 @@ const readingStatusInput = document.getElementById("reading-status-input");
 const bookList = document.getElementById("book-list");
 const searchInput = document.getElementById("search-input");
 const statusFilter = document.getElementById("status-filter");
+
 
 // array for storing books added
 let books = [];
@@ -123,6 +125,7 @@ bookForm.addEventListener("submit", function(event) {
 saveBooks();
 applyFilters();
 bookForm.reset();
+submitButton.textContent = "Add Book";
 });
 
 // Event for dropdown menu for reading status changes in the Card
@@ -176,6 +179,7 @@ bookList.addEventListener("click", function(event) {
   readingStatusInput.value = bookToEdit.readingStatus;
 
   editingBookId = bookId;
+  submitButton.textContent = "Update Book";
 }
 });
 
