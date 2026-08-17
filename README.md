@@ -1,15 +1,16 @@
-# Media Tracker
+# StoryTime
 
 This Media Tracker program is a web application to track, store, add, and recommend different forms of Media. It is starting with books and can add books, search their library, filter by reading status, update a book's status, delete books, and save their library in the browser using localStorage.
 
 ## Current Features
 
+- Multi-page layout with a themed homepage and Books tracker page
 - Add books with title, author, pages, genre, sub genre, series, cover image, and reading status
 - Display books as cards with cover images
 - Search books by title or author
 - Filter books by reading status
 - Edit book details
-- Update reading status directly from each card
+- Update reading status directly from each book card
 - Delete books
 - Save books with localStorage
 - Responsive homepage and Books page layout
@@ -20,6 +21,14 @@ This Media Tracker program is a web application to track, store, add, and recomm
 - Added book cover image display
 - Improved book card layout
 - Added multi-page navigation between Home and Books
+
+## Planned Features
+
+- Continue polishing the StoryTime homepage theme
+- Add more media categories, including movies, TV shows, manga, anime, songs, and albums
+- Add book search using the Open Library API
+- Add backend/database support so users can save their collections permanently
+- Add user accounts/authentication in a future full-stack version
 
 ## Tech Used
 
