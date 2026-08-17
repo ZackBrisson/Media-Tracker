@@ -2,6 +2,10 @@
 
 This Media Tracker program is a web application to track, store, add, and recommend different forms of Media. It is starting with books and can add books, search their library, filter by reading status, update a book's status, delete books, and save their library in the browser using localStorage.
 
+## Live Demo
+
+View the deployed project here: https://zackbrisson.github.io/Media-Tracker/
+
 ## Current Features
 
 - Multi-page layout with a themed homepage and Books tracker page
