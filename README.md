@@ -4,15 +4,22 @@ This Media Tracker program is a web application to track, store, add, and recomm
 
 ## Current Features
 
-- Add books with title, author, pages, genre, sub genre, book cover, series, and reading status
-- Display books as individual cards
+- Add books with title, author, pages, genre, sub genre, series, cover image, and reading status
+- Display books as cards with cover images
 - Search books by title or author
 - Filter books by reading status
-- Update a book's reading status
-- Delete books from the list
-- Save books using localStorage
-- Show an empty-state message when no books are found
-- Basic Books page layout with search, add book, book list, and recommendations sections
+- Edit book details
+- Update reading status directly from each card
+- Delete books
+- Save books with localStorage
+- Responsive homepage and Books page layout
+
+## Recent Progress
+
+- Added full CRUD functionality for books
+- Added book cover image display
+- Improved book card layout
+- Added multi-page navigation between Home and Books
 
 ## Tech Used
 

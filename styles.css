@@ -3,11 +3,32 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
+  background: url(https://as2.ftcdn.net/jpg/14/08/07/39/1000_F_1408073982_D7zLcxFIauob9ynjz2gWhy5jsBRILxBa.jpg)
+  
+};
+
+#home-hero,
+#current-focus {
+  background-color: rgba(45, 32, 26, 0.88);
+  color: #f4eadc;
+  border: 2px solid rgba(216, 166, 87, 0.65);
+  border-radius: 18px;
 }
 
 #home-hero {
-  text-align: center;
+  background-color: rgba(216, 166, 87, 0.78);
+  border-radius: 14px;
+  padding: 20px;
   margin-bottom: 30px;
+}
+
+#home-hero h1 {
+  background-color: transparent;
+  margin: 0 0 10px 0;
+}
+
+#home-hero p {
+  margin: 0;
 }
 
 #current-focus {
@@ -21,16 +42,36 @@
 #media-shelves {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 5px;
+  background-color:#000000
 }
 
+.media-shelf,
+#current-focus,
+#favorites-shelf {
+  background-color: rgba(45, 32, 26, 0.9);
+  border: 2px solid #000000;
+  border-radius: 16px;
+  color: #f4eadc;
+}
+
+
 .media-shelf {
-  border: 2px solid #8b5a2b;
-  border-bottom: 12px solid #8b5a2b;
+  border: 2px solid #000000;
+  border-bottom: border-bottom: 5px solid rgba(20, 12, 8, 0.55);
   border-radius: 10px;
   padding: 20px;
   min-height: 140px;
-  background-color: #fff8ec;
+  background-color:#5c3a24;
+  color:#ccc
+}
+
+.media-shelf a,
+#current-focus a,
+nav a {
+  border: 1px solid #d8a657;
+  color: #f4eadc;
+  background-color: rgba(216, 166, 87, 0.12);
 }
 
 .media-shelf h2 {
