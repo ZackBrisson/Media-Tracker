@@ -67,3 +67,18 @@ View the deployed project here: https://zackbrisson.github.io/Media-Tracker/
 ## Project Status
 
 This project is currently in front-end development. The goal is to make the Books Tracker polished and portfolio-ready first, then later upgrade it into a full-stack application.
+
+
+## Screenshots
+
+### Homepage
+
+![StoryTime Homepage](screenshots/Homepage.png)
+
+### Books Tracker
+
+![Books Tracker Empty State](screenshots/Book-Tracker.png)
+
+### Books Tracker Example
+
+![Books Tracker With Example Book](screenshots/Book-Tracker-Example.png)
