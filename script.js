@@ -11,11 +11,65 @@ const readingStatusInput = document.getElementById("reading-status-input");
 const bookList = document.getElementById("book-list");
 const searchInput = document.getElementById("search-input");
 const statusFilter = document.getElementById("status-filter");
+const apiSearchInput = document.getElementById("api-search-input");
+const apiSearchButton = document.getElementById("api-search-button");
+const apiSearchResults = document.getElementById("api-search-results");
+
+
+// function for the Open API 
+apiSearchButton.addEventListener("click", function() {
+  const searchTerm = apiSearchInput.value;
+
+  fetch("https://openlibrary.org/search.json?q=" + encodeURIComponent(searchTerm) + "&limit=5")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      apiBooks = data.docs;
+      apiSearchResults.innerHTML = "";
+
+      apiSearchResults.addEventListener("click", function(event) {
+  if (event.target.classList.contains("select-api-book")) {
+    const bookIndex = Number(event.target.dataset.index);
+    const selectedBook = apiBooks[bookIndex];
+
+    titleInput.value = selectedBook.title;
+
+    authorInput.value = selectedBook.author_name
+      ? selectedBook.author_name[0]
+      : "";
+    if (selectedBook.cover_i) {
+  bookCoverInput.value =
+    "https://covers.openlibrary.org/b/id/" +
+    selectedBook.cover_i +
+    "-M.jpg";
+} else {
+  bookCoverInput.value = "";
+}
+apiSearchResults.innerHTML = "";
+apiSearchInput.value = "";
+
+  }
+});
+
+data.docs.forEach(function(book, index) {
+  const author = book.author_name ? book.author_name[0] : "Unknown Author";
+
+  apiSearchResults.innerHTML +=
+    '<div class="api-result">' +
+      '<h4>' + book.title + '</h4>' +
+      '<p>' + author + '</p>' +
+      '<button class="select-api-book" data-index="' + index + '">Select</button>' +
+    '</div>';
+});
+    });
+});
+
 
 
 // array for storing books added
 let books = [];
-
+let apiBooks = [];
 let editingBookId = null;
 
 // function used to search books
