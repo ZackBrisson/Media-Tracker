@@ -1,3 +1,9 @@
+#books-page {
+  background-color: rgba(244, 234, 220, 0.92);
+  padding: 24px;
+  border-radius: 16px;
+}
+
 /* Home Page Layout */
 #home-page {
   max-width: 1000px;
@@ -121,14 +127,14 @@ nav a {
   border: 1px solid black;
   border-radius: 6px;
   text-decoration: none;
-  color: black;
+  color: rgb(0, 0, 0);
   cursor: pointer;
 }
 
 .media-shelf a:hover,
 #current-focus a:hover,
 nav a:hover {
-  background-color: #eeeeee;
+  background-color: #413030;
 }
 
 @media (max-width: 700px) {
@@ -144,6 +150,13 @@ nav a:hover {
 /* BEGINNING OF THE BOOK TRACKER SECTION */
 
 /* Page Layout */
+#books-page {
+  background-color: rgba(244, 234, 220, 0.92);
+  padding: 24px;
+  border-radius: 16px;
+}
+
+
 body {
   max-width: 1000px;
   margin: 0 auto;
@@ -184,6 +197,14 @@ nav a {
 #book-main-section {
   display: flex;
   gap: 20px;
+}
+
+#add-book-section,
+#book-list-section,
+#book-recommendation-section {
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid #c9b79c;
+  border-radius: 12px;
 }
 
 /* Add Book Section */
