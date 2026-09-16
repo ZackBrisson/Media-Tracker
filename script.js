@@ -302,5 +302,13 @@ bookList.addEventListener("click", function(event) {
 }
 });
 
+fetch("http://localhost:5000/books")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    console.log("Books from StoryTime backend:", data);
+  });
+
 loadBooks();
 applyFilters();
