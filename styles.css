@@ -344,4 +344,50 @@ nav a {
   border-radius: 6px;
 }
 
+/* Book API Search Section */
+#api-book-search {
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid #c9b79c;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+#api-book-search h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#api-search-input {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#api-search-button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.api-result {
+  border-top: 1px solid #c9b79c;
+  padding: 12px 0;
+}
+
+.api-result h4 {
+  margin: 0 0 4px 0;
+}
+
+.api-result p {
+  margin: 0 0 8px 0;
+}
+
+.select-api-book {
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 /* END OF BOOK TRACKER SECTION */
