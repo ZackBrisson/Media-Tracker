@@ -15,10 +15,10 @@ const apiSearchInput = document.getElementById("api-search-input");
 const apiSearchButton = document.getElementById("api-search-button");
 const apiSearchResults = document.getElementById("api-search-results");
 
-
-// function for the Open API 
+// function for the Open API
 apiSearchButton.addEventListener("click", function() {
   const searchTerm = apiSearchInput.value;
+  apiSearchResults.innerHTML = "<p>Searching...</p>";
 
   fetch("https://openlibrary.org/search.json?q=" + encodeURIComponent(searchTerm) + "&limit=5")
     .then(function(response) {
@@ -28,7 +28,73 @@ apiSearchButton.addEventListener("click", function() {
       apiBooks = data.docs;
       apiSearchResults.innerHTML = "";
 
-      apiSearchResults.addEventListener("click", function(event) {
+      if (data.docs.length === 0) {
+        apiSearchResults.innerHTML = "<p>No books found.</p>";
+        return;
+      }
+
+      data.docs.forEach(function(book, index) {
+        const author = book.author_name
+          ? book.author_name[0]
+          : "Unknown Author";
+
+        apiSearchResults.innerHTML +=
+          '<div class="api-result">' +
+            '<h4>' + book.title + '</h4>' +
+            '<p>' + author + '</p>' +
+            '<button class="select-api-book" data-index="' + index + '">Select</button>' +
+          '</div>';
+      });
+    })
+    .catch(function(error) {
+      apiSearchResults.innerHTML =
+        "<p>Something went wrong. Please try again.</p>";
+
+      console.error(error);
+    });
+});
+
+  // Search Open Library
+apiSearchButton.addEventListener("click", function() {
+  const searchTerm = apiSearchInput.value;
+  apiSearchResults.innerHTML = "<p>Searching...</p>";
+
+  fetch("https://openlibrary.org/search.json?q=" + encodeURIComponent(searchTerm) + "&limit=5")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      apiBooks = data.docs;
+      apiSearchResults.innerHTML = "";
+
+      if (data.docs.length === 0) {
+        apiSearchResults.innerHTML = "<p>No books found.</p>";
+        return;
+      }
+
+      data.docs.forEach(function(book, index) {
+        const author = book.author_name
+          ? book.author_name[0]
+          : "Unknown Author";
+
+        apiSearchResults.innerHTML +=
+          '<div class="api-result">' +
+            '<h4>' + book.title + '</h4>' +
+            '<p>' + author + '</p>' +
+            '<button class="select-api-book" data-index="' + index + '">Select</button>' +
+          '</div>';
+      });
+    })
+    .catch(function(error) {
+      apiSearchResults.innerHTML =
+        "<p>Something went wrong. Please try again.</p>";
+
+      console.error(error);
+    });
+});
+
+// Select an API result
+apiSearchResults.addEventListener("click", function(event) {
   if (event.target.classList.contains("select-api-book")) {
     const bookIndex = Number(event.target.dataset.index);
     const selectedBook = apiBooks[bookIndex];
@@ -38,31 +104,19 @@ apiSearchButton.addEventListener("click", function() {
     authorInput.value = selectedBook.author_name
       ? selectedBook.author_name[0]
       : "";
+
     if (selectedBook.cover_i) {
-  bookCoverInput.value =
-    "https://covers.openlibrary.org/b/id/" +
-    selectedBook.cover_i +
-    "-M.jpg";
-} else {
-  bookCoverInput.value = "";
-}
-apiSearchResults.innerHTML = "";
-apiSearchInput.value = "";
+      bookCoverInput.value =
+        "https://covers.openlibrary.org/b/id/" +
+        selectedBook.cover_i +
+        "-M.jpg";
+    } else {
+      bookCoverInput.value = "";
+    }
 
+    apiSearchResults.innerHTML = "";
+    apiSearchInput.value = "";
   }
-});
-
-data.docs.forEach(function(book, index) {
-  const author = book.author_name ? book.author_name[0] : "Unknown Author";
-
-  apiSearchResults.innerHTML +=
-    '<div class="api-result">' +
-      '<h4>' + book.title + '</h4>' +
-      '<p>' + author + '</p>' +
-      '<button class="select-api-book" data-index="' + index + '">Select</button>' +
-    '</div>';
-});
-    });
 });
 
 
