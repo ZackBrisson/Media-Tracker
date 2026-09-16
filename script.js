@@ -310,6 +310,23 @@ fetch("http://localhost:5000/books")
     console.log("Books from StoryTime backend:", data);
   });
 
+  fetch("http://localhost:5000/books/1", {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    title: "The Hobbit: Updated",
+    author: "J.R.R. Tolkien"
+  })
+})
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    console.log("Updated book:", data);
+  });
+
 loadBooks();
 applyFilters();
 
