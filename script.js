@@ -185,6 +185,11 @@ function renderBooks(booksArray) {
 bookForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
+  if (titleInput.value.trim() === "" || authorInput.value.trim() === "") {
+  alert("Please enter both a title and an author.");
+  return;
+}
+
   if (editingBookId === null) {
   const newBook = {
     title: titleInput.value,
@@ -205,8 +210,12 @@ bookForm.addEventListener("submit", function(event) {
     body: JSON.stringify(newBook)
   })
     .then(function(response) {
-      return response.json();
-    })
+  if (!response.ok) {
+    throw new Error("Could not add book");
+  }
+
+  return response.json();
+})
     .then(function(savedBook) {
       books.push(savedBook);
 
@@ -231,31 +240,35 @@ bookForm.addEventListener("submit", function(event) {
   };
 
   fetch("http://localhost:5000/books/" + editingBookId, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(updatedBook)
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(updatedBook)
+})
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error("Could not update book");
+    }
+
+    return response.json();
   })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(savedBook) {
-      const bookIndex = books.findIndex(function(book) {
-        return book.id === editingBookId;
-      });
-
-      books[bookIndex] = savedBook;
-
-      editingBookId = null;
-
-      applyFilters();
-      bookForm.reset();
-      submitButton.textContent = "Add Book";
-    })
-    .catch(function(error) {
-      console.error("Could not update book:", error);
+  .then(function(savedBook) {
+    const bookIndex = books.findIndex(function(book) {
+      return book.id === editingBookId;
     });
+
+    books[bookIndex] = savedBook;
+
+    editingBookId = null;
+
+    applyFilters();
+    bookForm.reset();
+    submitButton.textContent = "Add Book";
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
 
   return;
 }
@@ -290,8 +303,12 @@ bookList.addEventListener("change", function(event) {
       body: JSON.stringify(updatedBook)
     })
       .then(function(response) {
-        return response.json();
-      })
+  if (!response.ok) {
+    throw new Error("Could not update reading status");
+  }
+
+  return response.json();
+})
       .then(function(savedBook) {
         const bookIndex = books.findIndex(function(book) {
           return book.id === bookId;
@@ -316,8 +333,12 @@ bookList.addEventListener("click", function(event) {
     method: "DELETE"
   })
     .then(function(response) {
-      return response.json();
-    })
+  if (!response.ok) {
+    throw new Error("Could not delete book");
+  }
+
+  return response.json();
+})
     .then(function(data) {
       books = books.filter(function(book) {
         return book.id !== bookId;

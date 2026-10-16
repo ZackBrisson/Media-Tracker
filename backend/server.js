@@ -50,6 +50,12 @@ app.post("/books", function(req, res) {
     pages
   } = req.body;
 
+if (!title || !author) {
+  return res.status(400).json({
+    message: "Title and author are required"
+  });
+}
+
   db.run(
     `
     INSERT INTO books (
@@ -136,6 +142,12 @@ app.put("/books/:id", function(req, res) {
     readingStatus,
     pages
   } = req.body;
+
+  if (!title || !author) {
+  return res.status(400).json({
+    message: "Title and author are required"
+  });
+}
 
   db.run(
     `
