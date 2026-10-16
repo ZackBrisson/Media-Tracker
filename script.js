@@ -54,45 +54,6 @@ apiSearchButton.addEventListener("click", function() {
     });
 });
 
-  // Search Open Library
-apiSearchButton.addEventListener("click", function() {
-  const searchTerm = apiSearchInput.value;
-  apiSearchResults.innerHTML = "<p>Searching...</p>";
-
-  fetch("https://openlibrary.org/search.json?q=" + encodeURIComponent(searchTerm) + "&limit=5")
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      apiBooks = data.docs;
-      apiSearchResults.innerHTML = "";
-
-      if (data.docs.length === 0) {
-        apiSearchResults.innerHTML = "<p>No books found.</p>";
-        return;
-      }
-
-      data.docs.forEach(function(book, index) {
-        const author = book.author_name
-          ? book.author_name[0]
-          : "Unknown Author";
-
-        apiSearchResults.innerHTML +=
-          '<div class="api-result">' +
-            '<h4>' + book.title + '</h4>' +
-            '<p>' + author + '</p>' +
-            '<button class="select-api-book" data-index="' + index + '">Select</button>' +
-          '</div>';
-      });
-    })
-    .catch(function(error) {
-      apiSearchResults.innerHTML =
-        "<p>Something went wrong. Please try again.</p>";
-
-      console.error(error);
-    });
-});
-
 // Select an API result
 apiSearchResults.addEventListener("click", function(event) {
   if (event.target.classList.contains("select-api-book")) {
@@ -145,18 +106,32 @@ function applyFilters() {
   renderBooks(filteredBooks);
 }
 
-// function used to store books
-function saveBooks() {
-  localStorage.setItem("books", JSON.stringify(books));
-}
+//function used to load books from backend
+function loadBooksFromBackend() {
+  fetch("http://localhost:5000/books")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      books = data.map(function(book) {
+        return {
+          id: book.id,
+          title: book.title,
+          author: book.author,
+          genre: book.genre,
+          subGenre: book.sub_genre,
+          bookCover: book.book_cover,
+          series: book.series,
+          readingStatus: book.reading_status,
+          pages: book.pages
+        };
+      });
 
-// function used to load books
-function loadBooks() {
-  const savedBooks = localStorage.getItem("books");
-
-  if (savedBooks) {
-    books = JSON.parse(savedBooks);
-  }
+      renderBooks(books);
+    })
+    .catch(function(error) {
+      console.error("Could not load books:", error);
+    });
 }
 
 searchInput.addEventListener("input", applyFilters);
@@ -212,10 +187,9 @@ bookForm.addEventListener("submit", function(event) {
 
   if (editingBookId === null) {
   const newBook = {
-    id: Date.now(),
     title: titleInput.value,
     author: authorInput.value,
-    pages: pagesInput.value,
+    pages: Number(pagesInput.value),
     genre: genreInput.value,
     subGenre: subGenreInput.value,
     bookCover: bookCoverInput.value,
@@ -223,63 +197,138 @@ bookForm.addEventListener("submit", function(event) {
     readingStatus: readingStatusInput.value
   };
 
-  books.push(newBook);
+  fetch("http://localhost:5000/books", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(newBook)
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(savedBook) {
+      books.push(savedBook);
+
+      applyFilters();
+      bookForm.reset();
+    })
+    .catch(function(error) {
+      console.error("Could not add book:", error);
+    });
+
+  return;
 } else {
-  const bookToUpdate = books.find(function(book) {
-    return book.id === editingBookId;
-  });
+  const updatedBook = {
+    title: titleInput.value,
+    author: authorInput.value,
+    pages: Number(pagesInput.value),
+    genre: genreInput.value,
+    subGenre: subGenreInput.value,
+    bookCover: bookCoverInput.value,
+    series: seriesInput.value,
+    readingStatus: readingStatusInput.value
+  };
 
-  bookToUpdate.title = titleInput.value;
-  bookToUpdate.author = authorInput.value;
-  bookToUpdate.pages = pagesInput.value;
-  bookToUpdate.genre = genreInput.value;
-  bookToUpdate.subGenre = subGenreInput.value;
-  bookToUpdate.bookCover = bookCoverInput.value;
-  bookToUpdate.series = seriesInput.value;
-  bookToUpdate.readingStatus = readingStatusInput.value;
+  fetch("http://localhost:5000/books/" + editingBookId, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedBook)
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(savedBook) {
+      const bookIndex = books.findIndex(function(book) {
+        return book.id === editingBookId;
+      });
 
-  editingBookId = null;
+      books[bookIndex] = savedBook;
+
+      editingBookId = null;
+
+      applyFilters();
+      bookForm.reset();
+      submitButton.textContent = "Add Book";
+    })
+    .catch(function(error) {
+      console.error("Could not update book:", error);
+    });
+
+  return;
 }
-
-saveBooks();
-applyFilters();
-bookForm.reset();
-submitButton.textContent = "Add Book";
 });
 
 // Event for dropdown menu for reading status changes in the Card
 bookList.addEventListener("change", function(event) {
   if (event.target.classList.contains("status-select")) {
-   const bookId = Number(event.target.dataset.id);
-const newStatus = event.target.value;
+    const bookId = Number(event.target.dataset.id);
+    const newStatus = event.target.value;
 
-const bookToUpdate = books.find(function(book) {
-  return book.id === bookId;
-});
+    const bookToUpdate = books.find(function(book) {
+      return book.id === bookId;
+    });
 
-bookToUpdate.readingStatus = newStatus;
+    const updatedBook = {
+      title: bookToUpdate.title,
+      author: bookToUpdate.author,
+      pages: Number(bookToUpdate.pages),
+      genre: bookToUpdate.genre,
+      subGenre: bookToUpdate.subGenre,
+      bookCover: bookToUpdate.bookCover,
+      series: bookToUpdate.series,
+      readingStatus: newStatus
+    };
 
-saveBooks();
+    fetch("http://localhost:5000/books/" + bookId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedBook)
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(savedBook) {
+        const bookIndex = books.findIndex(function(book) {
+          return book.id === bookId;
+        });
 
-applyFilters();
+        books[bookIndex] = savedBook;
 
+        applyFilters();
+      })
+      .catch(function(error) {
+        console.error("Could not update reading status:", error);
+      });
   }
 });
 
 // This code runs when a Delete/Edit button is clicked
 bookList.addEventListener("click", function(event) {
-  if (event.target.classList.contains("delete-button")) {
-    const bookId = Number(event.target.dataset.id);
+ if (event.target.classList.contains("delete-button")) {
+  const bookId = Number(event.target.dataset.id);
 
-  
-    books = books.filter(function(book) {
-      return book.id !== bookId;
+  fetch("http://localhost:5000/books/" + bookId, {
+    method: "DELETE"
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      books = books.filter(function(book) {
+        return book.id !== bookId;
+      });
+
+      applyFilters();
+    })
+    .catch(function(error) {
+      console.error("Could not delete book:", error);
     });
-    
-    applyFilters();
-
-    saveBooks();
-  }
+}
 
   if (event.target.classList.contains("edit-button")) {
   const bookId = Number(event.target.dataset.id);
@@ -302,31 +351,5 @@ bookList.addEventListener("click", function(event) {
 }
 });
 
-fetch("http://localhost:5000/books")
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log("Books from StoryTime backend:", data);
-  });
-
-  fetch("http://localhost:5000/books/1", {
-  method: "PUT",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    title: "The Hobbit: Updated",
-    author: "J.R.R. Tolkien"
-  })
-})
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log("Updated book:", data);
-  });
-
-loadBooks();
-applyFilters();
+loadBooksFromBackend();
 

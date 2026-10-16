@@ -4,6 +4,8 @@ const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
+const db = require("./database");
+
 app.use(cors());
 app.use(express.json());
 
@@ -25,53 +27,167 @@ app.get("/", function(req, res) {
 });
 
 app.get("/books", function(req, res) {
-  res.json(books);
+  db.all("SELECT * FROM books", function(error, rows) {
+    if (error) {
+      return res.status(500).json({
+        message: "Could not load books"
+      });
+    }
+
+    res.json(rows);
+  });
 });
 
 app.post("/books", function(req, res) {
-  const newBook = req.body;
+  const {
+    title,
+    author,
+    genre,
+    subGenre,
+    bookCover,
+    series,
+    readingStatus,
+    pages
+  } = req.body;
 
-  books.push(newBook);
+  db.run(
+    `
+    INSERT INTO books (
+      title,
+      author,
+      genre,
+      sub_genre,
+      book_cover,
+      series,
+      reading_status,
+      pages
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+    [
+      title,
+      author,
+      genre,
+      subGenre,
+      bookCover,
+      series,
+      readingStatus,
+      pages
+    ],
+    function(error) {
+      if (error) {
+        return res.status(500).json({
+          message: "Could not add book"
+        });
+      }
 
-  res.json(newBook);
+      res.json({
+        id: this.lastID,
+        title,
+        author,
+        genre,
+        subGenre,
+        bookCover,
+        series,
+        readingStatus,
+        pages
+      });
+    }
+  );
 });
 
 app.delete("/books/:id", function(req, res) {
   const bookId = Number(req.params.id);
 
-  const bookIndex = books.findIndex(function(book) {
-    return book.id === bookId;
-  });
+  db.run(
+    "DELETE FROM books WHERE id = ?",
+    [bookId],
+    function(error) {
+      if (error) {
+        return res.status(500).json({
+          message: "Could not delete book"
+        });
+      }
 
-  if (bookIndex === -1) {
-    return res.status(404).json({
-      message: "Book not found"
-    });
-  }
+      if (this.changes === 0) {
+        return res.status(404).json({
+          message: "Book not found"
+        });
+      }
 
-  const deletedBook = books.splice(bookIndex, 1);
-
-  res.json(deletedBook[0]);
+      res.json({
+        message: "Book deleted",
+        id: bookId
+      });
+    }
+  );
 });
 
 app.put("/books/:id", function(req, res) {
+  const bookId = Number(req.params.id);
 
-    const bookId = Number(req.params.id);
+  const {
+    title,
+    author,
+    genre,
+    subGenre,
+    bookCover,
+    series,
+    readingStatus,
+    pages
+  } = req.body;
 
-  const book = books.find(function(book) {
-    return book.id === bookId;
-  });
+  db.run(
+    `
+    UPDATE books
+    SET
+      title = ?,
+      author = ?,
+      genre = ?,
+      sub_genre = ?,
+      book_cover = ?,
+      series = ?,
+      reading_status = ?,
+      pages = ?
+    WHERE id = ?
+    `,
+    [
+      title,
+      author,
+      genre,
+      subGenre,
+      bookCover,
+      series,
+      readingStatus,
+      pages,
+      bookId
+    ],
+    function(error) {
+      if (error) {
+        return res.status(500).json({
+          message: "Could not update book"
+        });
+      }
 
-  if (!book) {
-    return res.status(404).json({
-      message: "Book not found"
-    });
-  }
+      if (this.changes === 0) {
+        return res.status(404).json({
+          message: "Book not found"
+        });
+      }
 
-  book.title = req.body.title;
-  book.author = req.body.author;
-
-  res.json(book);
+      res.json({
+        id: bookId,
+        title,
+        author,
+        genre,
+        subGenre,
+        bookCover,
+        series,
+        readingStatus,
+        pages
+      });
+    }
+  );
 });
 
 app.listen(PORT, function() {
