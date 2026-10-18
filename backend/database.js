@@ -1,6 +1,11 @@
 const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
-const db = new sqlite3.Database("./storytime.db", function(error) {
+const databasePath = process.env.RAILWAY_VOLUME_MOUNT_PATH
+  ? path.join(process.env.RAILWAY_VOLUME_MOUNT_PATH, "storytime.db")
+  : "./storytime.db";
+
+const db = new sqlite3.Database(databasePath, function(error) {
   if (error) {
     console.error("Database connection failed:", error.message);
   } else {
