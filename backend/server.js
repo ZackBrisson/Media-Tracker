@@ -6,7 +6,9 @@ const PORT = process.env.PORT || 5000;
 
 const db = require("./database");
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 
 const books = [
