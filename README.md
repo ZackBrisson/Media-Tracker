@@ -1,73 +1,159 @@
 # StoryTime
 
-This Media Tracker program is a web application to track, store, add, and recommend different forms of Media. It is starting with books and can add books, search their library, filter by reading status, update a book's status, delete books, and save their library in the browser using localStorage.
+StoryTime is a cozy full-stack book tracking web application that allows users to build and manage their personal reading library.
+
+The project began as a front-end media tracker and evolved into a full-stack application using an Express backend, SQLite database, and the Open Library API.
 
 ## Live Demo
 
-View the deployed project here: https://zackbrisson.github.io/Media-Tracker/
+View the deployed frontend here:
+
+https://zackbrisson.github.io/Media-Tracker/
 
 ## Current Features
 
-- Multi-page layout with a themed homepage and Books tracker page
-- Add books with title, author, pages, genre, sub genre, series, cover image, and reading status
-- Display books as cards with cover images
-- Search books by title or author
+- Cozy multi-page StoryTime interface
+- Search for real books using the Open Library API
+- Automatically fill book title, author, and cover information from search results
+- Add books with:
+  - Title
+  - Author
+  - Pages
+  - Genre
+  - Sub genre
+  - Series
+  - Book cover
+  - Reading status
+- Display books as visual cards
+- Search your library by title or author
 - Filter books by reading status
-- Edit book details
-- Update reading status directly from each book card
+- Edit existing book details
+- Change reading status directly from a book card
 - Delete books
-- Save books with localStorage
-- Responsive homepage and Books page layout
+- Persistent book storage using SQLite
+- Frontend validation for required fields
+- Backend validation and API error handling
+- Responsive layout for different screen sizes
 
-## Recent Progress
+## Architecture
 
-- Added full CRUD functionality for books
-- Added book cover image display
-- Improved book card layout
-- Added multi-page navigation between Home and Books
+StoryTime uses a separated frontend and backend architecture.
 
-## Planned Features
+### Frontend
 
-- Continue polishing the StoryTime homepage theme
-- Add more media categories, including movies, TV shows, manga, anime, songs, and albums
-- Add book search using the Open Library API
-- Add backend/database support so users can save their collections permanently
-- Add user accounts/authentication in a future full-stack version
+The frontend is built with:
+
+- HTML
+- CSS
+- Vanilla JavaScript
+
+It is deployed using GitHub Pages.
+
+### Backend
+
+The backend is built with:
+
+- Node.js
+- Express
+- SQLite
+- CORS
+
+The Express API is deployed on Railway.
+
+### Database
+
+StoryTime uses SQLite for persistent book storage.
+
+The production SQLite database is stored on a Railway persistent volume so book data survives application redeployments.
+
+## API
+
+The StoryTime backend provides REST API routes for book management:
+
+- `GET /books` - Retrieve all books
+- `POST /books` - Add a new book
+- `PUT /books/:id` - Update an existing book
+- `DELETE /books/:id` - Delete a book
+
+## External API
+
+StoryTime uses the Open Library API to search for books and retrieve information such as:
+
+- Book title
+- Author
+- Cover image
+
+Users can select a search result to automatically populate parts of the Add Book form.
 
 ## Tech Used
 
 - HTML
 - CSS
 - JavaScript
-- localStorage
-- Git and GitHub
+- Node.js
+- Express
+- SQLite
+- Open Library API
+- REST APIs
+- CORS
+- Git
+- GitHub
+- GitHub Pages
+- Railway
 
 ## What I Learned
 
-- How to build forms with HTML
-- How to use JavaScript objects and arrays
-- How to render data to the page
-- How to use event listeners
-- How to use `find()` and `filter()`
-- How to use `localStorage`
-- How to organize a page with sections
-- How to use CSS flexbox for layout
-- How to commit and push project updates with Git
+Building StoryTime helped me practice and understand:
+
+- Creating and handling HTML forms
+- Working with JavaScript objects and arrays
+- Rendering dynamic data to the DOM
+- Using event listeners
+- Working with `find()`, `filter()`, and `map()`
+- Using `fetch()` for API requests
+- Working with promises and `.then()`
+- Connecting a frontend to a backend API
+- Building REST API routes with Express
+- Performing CRUD operations
+- Working with SQLite databases
+- Translating between JavaScript camelCase properties and SQL snake_case columns
+- Handling frontend and backend validation
+- Handling failed API responses with `response.ok`
+- Using environment variables in deployed applications
+- Configuring CORS for communication between separate frontend and backend deployments
+- Deploying an Express API to Railway
+- Using persistent storage for a production SQLite database
+- Debugging deployment, routing, syntax, and CORS issues
+- Using Git and GitHub throughout a project
 
 ## Future Improvements
 
-- Improve responsive layout for smaller screens
-- Add edit functionality for book details
-- Add real book cover images
-- Create a home page with different media categories
-- Add movies, TV shows, manga, anime, songs, and albums
-- Add recommendation features based on genre or tags
-- Upgrade to a full-stack app with a backend and database
+StoryTime is currently focused on books, but the larger vision is to expand it into a general media tracker.
+
+Possible future additions include:
+
+- User accounts and authentication
+- Individual user libraries
+- Movies
+- TV shows
+- Manga
+- Anime
+- Songs
+- Albums
+- Shared genre and tag systems across different media types
+- Recommendation features based on genres, tags, themes, and moods
+- Additional accessibility and responsive-design improvements
+- Migration to PostgreSQL if the application grows into a larger multi-user system
 
 ## Project Status
 
-This project is currently in front-end development. The goal is to make the Books Tracker polished and portfolio-ready first, then later upgrade it into a full-stack application.
+The Books version of StoryTime is complete and deployed as a full-stack portfolio project.
 
+The current architecture uses:
+
+GitHub Pages → Express API on Railway → SQLite database on a Railway persistent volume.
+
+Future versions may expand StoryTime into a larger multi-user media tracking platform.
 
 ## Screenshots
 

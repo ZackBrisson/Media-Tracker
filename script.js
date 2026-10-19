@@ -14,6 +14,8 @@ const statusFilter = document.getElementById("status-filter");
 const apiSearchInput = document.getElementById("api-search-input");
 const apiSearchButton = document.getElementById("api-search-button");
 const apiSearchResults = document.getElementById("api-search-results");
+const formMessage = document.getElementById("form-message");
+const API_BASE_URL = "https://storytime.up.railway.app";
 
 // function for the Open API
 apiSearchButton.addEventListener("click", function() {
@@ -108,7 +110,7 @@ function applyFilters() {
 
 //function used to load books from backend
 function loadBooksFromBackend() {
-  fetch("http://localhost:5000/books")
+  fetch(API_BASE_URL + "/books")
     .then(function(response) {
       return response.json();
     })
@@ -202,7 +204,7 @@ bookForm.addEventListener("submit", function(event) {
     readingStatus: readingStatusInput.value
   };
 
-  fetch("http://localhost:5000/books", {
+  fetch(API_BASE_URL + "/books", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -217,17 +219,24 @@ bookForm.addEventListener("submit", function(event) {
   return response.json();
 })
     .then(function(savedBook) {
-      books.push(savedBook);
+  books.push(savedBook);
 
-      applyFilters();
-      bookForm.reset();
-    })
+  applyFilters();
+  bookForm.reset();
+
+  formMessage.textContent = "Book added successfully!";
+})
+
     .catch(function(error) {
       console.error("Could not add book:", error);
+
+      formMessage.textContent = "Could not add book. Please try again.";
     });
 
   return;
-} else {
+} 
+
+else {
   const updatedBook = {
     title: titleInput.value,
     author: authorInput.value,
@@ -239,7 +248,7 @@ bookForm.addEventListener("submit", function(event) {
     readingStatus: readingStatusInput.value
   };
 
-  fetch("http://localhost:5000/books/" + editingBookId, {
+  fetch(API_BASE_URL + "/books/" + editingBookId, {
   method: "PUT",
   headers: {
     "Content-Type": "application/json"
@@ -265,10 +274,12 @@ bookForm.addEventListener("submit", function(event) {
     applyFilters();
     bookForm.reset();
     submitButton.textContent = "Add Book";
+    formMessage.textContent = "Book updated successfully!";
   })
   .catch(function(error) {
-    console.error(error);
-  });
+  console.error("Could not update book:", error);
+  formMessage.textContent = "Could not update book. Please try again.";
+});
 
   return;
 }
@@ -295,7 +306,7 @@ bookList.addEventListener("change", function(event) {
       readingStatus: newStatus
     };
 
-    fetch("http://localhost:5000/books/" + bookId, {
+    fetch(API_BASE_URL + "/books/" + bookId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -317,9 +328,11 @@ bookList.addEventListener("change", function(event) {
         books[bookIndex] = savedBook;
 
         applyFilters();
+        formMessage.textContent = "Reading status updated!";
       })
       .catch(function(error) {
         console.error("Could not update reading status:", error);
+        formMessage.textContent = "Could not update reading status. Please try again.";
       });
   }
 });
@@ -329,7 +342,7 @@ bookList.addEventListener("click", function(event) {
  if (event.target.classList.contains("delete-button")) {
   const bookId = Number(event.target.dataset.id);
 
-  fetch("http://localhost:5000/books/" + bookId, {
+  fetch(API_BASE_URL + "/books/" + bookId, {
     method: "DELETE"
   })
     .then(function(response) {
@@ -345,9 +358,12 @@ bookList.addEventListener("click", function(event) {
       });
 
       applyFilters();
+
+      formMessage.textContent = "Book deleted successfully!";
     })
     .catch(function(error) {
       console.error("Could not delete book:", error);
+      formMessage.textContent = "Could not delete book. Please try again.";
     });
 }
 
