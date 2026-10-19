@@ -18,19 +18,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-const books = [
-  {
-    id: 1,
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien"
-  },
-  {
-    id: 2,
-    title: "Dune",
-    author: "Frank Herbert"
-  }
-];
-
 app.get("/", function(req, res) {
   res.send("StoryTime API is running");
 });
