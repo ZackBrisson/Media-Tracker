@@ -6,9 +6,16 @@ const PORT = process.env.PORT || 5000;
 
 const db = require("./database");
 
-app.use(cors({
-  origin: "*"
-}));
+const corsOptions = {
+  origin: [
+    "http://localhost:8080",
+    "https://zackbrisson.github.io"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const books = [
