@@ -5,8 +5,6 @@ const databasePath = process.env.RAILWAY_VOLUME_MOUNT_PATH
   ? path.join(process.env.RAILWAY_VOLUME_MOUNT_PATH, "storytime.db")
   : "./storytime.db";
 
-  console.log("Database path:", databasePath);
-  
 const db = new sqlite3.Database(databasePath, function(error) {
   if (error) {
     console.error("Database connection failed:", error.message);
